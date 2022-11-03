@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 export function App() {
   const [hue, setHue] = React.useState(360)
   const [saturation, setSaturation] = React.useState(100)
   const [lightness, setLightness] = React.useState(100)
   const [alpha, setAlpha] = React.useState(1)
+
+  const [darkMode, setDarkMode] = React.useState(false)
+
+  function checkForDarkMode() {
+    setDarkMode(lightness < 50 && alpha > 0.5)
+  }
 
   function handleHueChange(event: React.FormEvent<HTMLInputElement>) {
     console.log(event.currentTarget.value)
@@ -26,8 +32,12 @@ export function App() {
   const newBackgroundColor = `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`
   const colorUp = { backgroundColor: newBackgroundColor }
 
+  useEffect(() => {
+    checkForDarkMode()
+  }, [lightness, alpha])
+
   return (
-    <div style={colorUp} className="container">
+    <div style={colorUp} className={`container ${darkMode && 'darkMode'}`}>
       <div className="controls">
         <header id="h1_title">
           HSLA {hue}, {saturation}%, {lightness}%, {alpha}
@@ -86,6 +96,7 @@ export function App() {
               setSaturation(Math.floor(Math.random() * 100))
               setLightness(Math.floor(Math.random() * 100))
               setAlpha(Math.random())
+              // checkForDarkMode()
             }}
           >
             Random Color Select
