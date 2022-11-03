@@ -96,7 +96,6 @@ export function App() {
               setSaturation(Math.floor(Math.random() * 100))
               setLightness(Math.floor(Math.random() * 100))
               setAlpha(Math.random())
-              // checkForDarkMode()
             }}
           >
             Random Color Select
